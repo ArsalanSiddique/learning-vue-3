@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <title>Assignments</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .list-heading {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h2>{{ pageHeading }}</h2>
+
+        <section v-show="inProgress.length">
+            <h4 class="list-heading">In Progress</h4>
+
+            <ul>
+                <li v-for="task in inProgress" :key="task.id">
+                    <label>
+                        {{ task.name }} <input type="checkbox" v-model="task.is_complete">
+                    </label>
+                </li>
+            </ul>
+        </section>
+
+        <section v-show="completed.length">
+            <h4 class="list-heading">Completed</h4>
+            <ul>
+                <li v-for="task in completed" :key="task.id">
+                    <label>
+                        {{ task.name }} <input type="checkbox" v-model="task.is_complete">
+                    </label>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script>
+
+        var app = {
+            data() {
+                return {
+                    'pageHeading': 'Todo App:',
+                    'tasks': [
+                        {
+                            'name': 'Complete projects',
+                            'is_complete': false,
+                            'id': 1
+                        },
+                        {
+                            'name': 'Deploy it on server',
+                            'is_complete': false,
+                            'id': 2
+                        },
+                        {
+                            'name': 'Sleep',
+                            'is_complete': false,
+                            'id': 3
+                        }
+                    ]
+                }
+            },
+
+            computed: {
+                inProgress() {
+                    return this.tasks.filter(a => !a.is_complete);
+                },
+
+                completed() {
+                    return this.tasks.filter(a => a.is_complete);
+                }
+            }
+
+        }
+
+        Vue.createApp(app).mount('#app');
+    </script>
+
+</body>
+
+</html>

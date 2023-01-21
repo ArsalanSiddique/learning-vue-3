@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        .text-green {
+            color: green;
+        }
+
+        .text-red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <input type="text" name="greetings" v-model="updatedGreetings" id="greetings">
+        <button v-on:click="update">Update Greetings</button>
+        <button v-on:click="updateStatus">Update color</button>
+
+        <p :class="active ? 'text-green' : 'text-red' ">{{ active ? 'GREEN LIGHT' : 'RED LIGHT' }}</p>
+
+    </div>
+
+    <script>
+
+        Vue.createApp({
+            data() {
+                return {
+                    'updatedGreetings': 'Type here..',
+                    'greetings': 'GREEN LIGHT',
+                    'active': true,
+                    'randomTimeInSeconds': Math.floor(Math.random() * (10000 - 2000) ) + 2000,
+                }
+            },
+
+            methods: {
+                update() {
+                    this.greetings = this.updatedGreetings;
+                },
+
+                updateStatus() {
+                    this.active = !this.active
+                }
+            },
+
+            mounted() {
+                setTimeout(() => {
+                    this.greetings = 'Start'
+                }, 3000);
+
+                setInterval(() => {
+                    this.active = !this.active,
+                    this.randomTimeInSeconds = Math.floor(Math.random() * (10000 - 2000) ) + 2000
+                }, this.randomTimeInSeconds)
+            }
+        }).mount('#app');
+
+    </script>
+
+</body>
+
+</html>
